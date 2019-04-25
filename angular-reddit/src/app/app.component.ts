@@ -8,12 +8,7 @@ import { Article } from './article/article.model';
 })
 export class AppComponent {
   title = 'angular-reddit';
-  articles: Article[];
-  addArticle(title: HTMLInputElement, link: HTMLInputElement) : boolean {
-    console.log(`Adding article title : ${title.value} and link : ${link.value}`);
-    return false;
-  } 
-
+  articles: Article[] = [];
 
   constructor() {
     this.articles = [new Article(
@@ -33,4 +28,17 @@ export class AppComponent {
     )];
 
   }
+
+  addArticle(title: HTMLInputElement, link: HTMLInputElement) : boolean {
+    this.articles.push(new Article(title.value, link.value, 0));
+    console.log(`Adding article title : ${title.value} and link : ${link.value}`);
+    title.value='';
+    link.value='';
+    return false;
+  } 
+
+sortedArticles() : Article[] {
+ return this.articles.sort((a: Article, b: Article) => b.votes - a.votes);
+}
+ 
 }
